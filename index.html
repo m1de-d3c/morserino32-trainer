@@ -261,9 +261,9 @@
                         aria-selected="false">QSO Trainer (beta!)</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="auto-trainer-tab" 
-                        data-bs-toggle="tab" data-bs-target="#auto-trainer-tab-content" 
-                        type="button" role="tab" aria-controls="auto-trainer-tab-content" 
+                <button class="nav-link" id="auto-progression-trainer-tab" 
+                        data-bs-toggle="tab" data-bs-target="#auto-progression-trainer-tab-content" 
+                        type="button" role="tab" aria-controls="auto-progression-trainer-tab-content" 
                         aria-selected="false">Auto-Progression Trainer (beta!)</button>
             </li>
             <li class="nav-item m32-protocol" role="presentation">
@@ -309,8 +309,8 @@
                     <div class="form-group">
                         <div id="morserino_detail" class="collapse show">
                             Received from Morserino:
-                            <textarea readonly onfocus="this.blur()" rows="3" cols="80" id="receiveText" spellcheck="false" placeholder="Here the characters received from Morserino are shown."></textarea>
-                            <!--<textarea rows="3" cols="80" id="receiveText" spellcheck="false" placeholder="Here the characters received from Morserino are shown."></textarea>-->
+                            <textarea readonly onfocus="this.blur()" rows="3" cols="80" id="receiveText" class="receiveText" spellcheck="false" placeholder="Here the characters received from Morserino are shown."></textarea>
+                            <!--<textarea rows="3" cols="80" class="receiveText" spellcheck="false" placeholder="Here the characters received from Morserino are shown."></textarea>-->
                         </div>
                     </div>
                     
@@ -380,7 +380,7 @@
                 </div>
                 <div class="form-group">
                     Received from Morserino:
-                    <textarea readonly onfocus="this.blur()" rows="6" cols="80" id="receiveText" spellcheck="false" placeholder="Here the characters received from Morserino are shown."></textarea>
+                    <textarea readonly onfocus="this.blur()" rows="6" cols="80" id="receiveTextEchoTrainer" class="receiveText" spellcheck="false" placeholder="Here the characters received from Morserino are shown."></textarea>
                 </div>
                 <div>
                     <button id="clearEchoTrainerButton" class="btn btn-outline-primary" title="Clear text received from Morserino (for Echo Trainer mode) and abbreviation list." data-bs-toggle="tooltip">Clear</button>
@@ -501,7 +501,7 @@
                 </div>
                 Received from Morserino:
                 <div class="col-sm form-group">
-                    <textarea rows="2" cols="80" id="receiveText" spellcheck="false" placeholder="Here the characters received from Morserino are shown."></textarea>
+                    <textarea rows="2" cols="80" id="receiveTextQsoTrainer" class="receiveText" spellcheck="false" placeholder="Here the characters received from Morserino are shown."></textarea>
                 </div>
                 <div class="form-group">
                     Your Input:
@@ -527,10 +527,14 @@
             </div> <!-- end QSO trainer -->
 
             <!-- start auto progression trainer -->
-            <div class="tab-pane fade show active" id="auto-trainer-tab-content" role="tabpanel" aria-labelledby="auto-trainer-tab">
+            <div class="tab-pane fade show active" id="auto-progression-trainer-tab-content" role="tabpanel" aria-labelledby="auto-progression-trainer-tab">
                 Received from morserino:
                 <div class="col-sm form-group">
-                    <textarea rows="2" cols="80" id="receiveText" spellcheck="false" placeholder="Here the characters received from Morserino are shown."></textarea>
+                    <textarea rows="2" cols="80" id="receiveTextAutoProgression" class="receiveText" spellcheck="false" placeholder="Here the characters received from Morserino are shown."></textarea>
+                </div>
+
+                <div>
+                    <button id="clearAutoProgressionButton" class="btn btn-outline-primary" title="Restart all of the progress." data-bs-toggle="tooltip">Restart Trainer (Clear Progress)</button>
                 </div>
             </div> <!-- end auto progression trainer -->
 

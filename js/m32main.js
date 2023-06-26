@@ -18,6 +18,7 @@ const { M32CommunicationService } = require('./m32-communication-service');
 const { QsoTrainerUI } = require('./m32-qso-trainer');
 const { ConfigurationUI } = require('./m32-configuration-ui');
 const { FileUploadUI } = require('./m32-file-upload-ui');
+const { AutoProgressionUI } = require('./m32-auto-progression-trainer-ui');
 
 
 // let m32Protocolhandler;
@@ -28,6 +29,7 @@ let VERSION = '0.6.1';
 const MODE_CW_GENERATOR = 'cw-generator';
 const MODE_ECHO_TRAINER = 'echo-trainer';
 const MODE_QSO_TRAINER = 'qso-trainer';
+const MODE_AUTO_PROGRESSION_TRAINER = 'auto-progression-trainer';
 const MODE_M32_CONFIG = 'm32-config';
 const MODE_FILE_UPLOAD = 'file-upload';
 
@@ -55,6 +57,7 @@ class M32Main {
         this.qsoTrainerUI = new QsoTrainerUI(m32CommunicationService, m32Storage);
         this.configurationUI = new ConfigurationUI(m32CommunicationService, document.getElementById('m32-config'));
         this.fileUploadUI = new FileUploadUI(m32CommunicationService);
+        this.autoProgressionUI = new AutoProgressionUI(m32CommunicationService);
 
         m32Storage.loadSettings();
 
@@ -64,6 +67,7 @@ class M32Main {
         this.eventEmitter.addListener(EVENT_MODE_SELECTED, this.echoTrainerUI.modeSelected.bind(this.echoTrainerUI));
         this.eventEmitter.addListener(EVENT_MODE_SELECTED, this.m32CwGeneratorUI.modeSelected.bind(this.m32CwGeneratorUI));
         this.eventEmitter.addListener(EVENT_MODE_SELECTED, this.qsoTrainerUI.modeSelected.bind(this.qsoTrainerUI));
+        this.eventEmitter.addListener(EVENT_MODE_SELECTED, this.autoProgressionUI.modeSelected.bind(this.autoProgressionUI));
 
         // enable bootstrap tooltips everywhere:    
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
@@ -121,6 +125,8 @@ class M32Main {
             document.getElementById('qso-trainer-tab').click();
         } else if (mode === MODE_M32_CONFIG) {
             document.getElementById('m32-config-tab').click();
+        } else if (mode === MODE_AUTO_PROGRESSION_TRAINER) {
+            document.getElementById('auto-progression-trainer-tab').click();
         } else if (mode === MODE_FILE_UPLOAD) {
             document.getElementById('m32-file-upload-tab').click();
         } else {
@@ -136,6 +142,8 @@ class M32Main {
             this.mode = MODE_ECHO_TRAINER;
         } else if (event.target.id === 'qso-trainer-tab') {
             this.mode = MODE_QSO_TRAINER;
+        } else if (event.target.id === 'auto-progression-trainer-tab') { 
+            this.mode = MODE_AUTO_PROGRESSION_TRAINER;
         } else if (event.target.id === 'm32-config-tab') {
             this.mode = MODE_M32_CONFIG;
             this.configurationUI.readConfigs();
@@ -147,5 +155,5 @@ class M32Main {
     }
 }
 
-module.exports = { MODE_CW_GENERATOR, MODE_ECHO_TRAINER, MODE_QSO_TRAINER, MODE_M32_CONFIG }
+module.exports = { MODE_CW_GENERATOR, MODE_ECHO_TRAINER, MODE_QSO_TRAINER, MODE_AUTO_PROGRESSION_TRAINER, MODE_M32_CONFIG }
 

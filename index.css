@@ -81,24 +81,12 @@ contentContainer .row {
     opacity: 0.7;
 }
 
-#receiveText {
-    background-color: #e2e3e5;
-}
-
-#receiveTextEchoTrainer {
+.receiveText {
     background-color: #e2e3e5;
 }
 
 #mainTab {
     padding-top: 20px;
-}
-
-#serialCommunicationDisabledInfo {
-    display: none;
-}
-
-#receiveTextQsoTrainer {
-    background-color: #e2e3e5;
 }
 
 .qso-request {

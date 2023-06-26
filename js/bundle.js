@@ -22,6 +22,37 @@ function createElementWithChildren(tag, ...children) {
 
 module.exports = { createSpanElement, createElement, createElementWithChildren}
 },{}],2:[function(require,module,exports){
+const log  = require ('loglevel');
+
+const { createElement } = require('./dom-utils');
+
+const { EVENT_M32_TEXT_RECEIVED } = require('./m32-communication-service');
+
+class AutoProgressionUI {
+    constructor(m32CommunicationService) {
+        this.receiveText = document.getElementById("receiveTextAutoProgression");
+        this.clearButton = document.getElementById("clearAutoProgressionButton");
+
+        this.m32CommunicationService = m32CommunicationService;
+        this.activeMode = false;
+    }
+
+    textReceived(value) {
+        if (this.activeMode) {
+            this.receiveText.value += value;
+            //Scroll to the bottom of the text field
+            this.receiveText.scrollTop = this.receiveText.scrollHeight;
+        }
+    }
+
+    modeSelected(mode) {
+        this.activeMode = mode === 'auto-progression-trainer';
+        log.debug("auto progression trainer active", this.activeMode, mode);
+    }
+}
+
+module.exports = { AutoProgressionUI }
+},{"./dom-utils":1,"./m32-communication-service":3,"loglevel":18}],3:[function(require,module,exports){
 'use strict';
 
 let log = require("loglevel");
@@ -416,7 +447,7 @@ module.exports = { M32CommunicationService, EVENT_M32_CONNECTED, EVENT_M32_DISCO
     EVENT_M32_CONNECTION_ERROR, EVENT_M32_TEXT_RECEIVED, EVENT_M32_JSON_ERROR_RECEIVED, MORSERINO_START, MORSERINO_END,
     M32_MENU_CW_GENERATOR_FILE_PLAYER_ID }
 
-},{"./m32protocol-i18n":11,"./m32protocol-speech-handler":12,"./m32protocol-state-handler":13,"./m32protocol-ui-handler":14,"events":19,"loglevel":17}],3:[function(require,module,exports){
+},{"./m32protocol-i18n":12,"./m32protocol-speech-handler":13,"./m32protocol-state-handler":14,"./m32protocol-ui-handler":15,"events":20,"loglevel":18}],4:[function(require,module,exports){
 'use strict';
 
 const log  = require ('loglevel');
@@ -803,7 +834,7 @@ class ConfigurationUI {
 
 module.exports = { ConfigurationUI }
 
-},{"./dom-utils":1,"loglevel":17}],4:[function(require,module,exports){
+},{"./dom-utils":1,"loglevel":18}],5:[function(require,module,exports){
 'use strict';
 
 const log  = require ('loglevel');
@@ -928,7 +959,7 @@ class M32ConnectUI {
 
 module.exports = { M32ConnectUI }
 
-},{"./m32-communication-service":2,"./m32-storage":9,"loglevel":17}],5:[function(require,module,exports){
+},{"./m32-communication-service":3,"./m32-storage":10,"loglevel":18}],6:[function(require,module,exports){
 'use strict';
 
 const log  = require ('loglevel');
@@ -1393,7 +1424,7 @@ class M32CwGeneratorUI {
 }
 
 module.exports = { M32CwGeneratorUI };
-},{"./dom-utils":1,"./m32-communication-service":2,"diff":16,"loglevel":17}],6:[function(require,module,exports){
+},{"./dom-utils":1,"./m32-communication-service":3,"diff":17,"loglevel":18}],7:[function(require,module,exports){
 'use strict';
 
 const log  = require ('loglevel');
@@ -1829,7 +1860,7 @@ class EchoTrainerUI {
 }
 
 module.exports = { EchoTrainerUI }
-},{"./dom-utils":1,"./m32-communication-service":2,"loglevel":17}],7:[function(require,module,exports){
+},{"./dom-utils":1,"./m32-communication-service":3,"loglevel":18}],8:[function(require,module,exports){
 'use strict';
 
 const { M32_MENU_CW_GENERATOR_FILE_PLAYER_ID } = require('./m32-communication-service');
@@ -2157,7 +2188,7 @@ VVV <KA> wz9uzj de wg9zp/3 <BT> solid copy becky. i live in nashua, new hampshir
 }
 module.exports = { FileUploadUI }
 
-},{"./dom-utils":1,"./m32-communication-service":2,"loglevel":17}],8:[function(require,module,exports){
+},{"./dom-utils":1,"./m32-communication-service":3,"loglevel":18}],9:[function(require,module,exports){
 'use strict';
 
 const log  = require ('loglevel');
@@ -2752,7 +2783,7 @@ class QsoTrainerUI {
 }
 
 module.exports = { QsoTrainerUI }
-},{"./dom-utils":1,"./m32-storage":9,"loglevel":17,"reregexp":18}],9:[function(require,module,exports){
+},{"./dom-utils":1,"./m32-storage":10,"loglevel":18,"reregexp":19}],10:[function(require,module,exports){
 'use strict';
 
 const log  = require ('loglevel');
@@ -2841,7 +2872,7 @@ class M32Storage {
 
 module.exports = { M32Settings, M32Storage, EVENT_SETTINGS_CHANGED }
 
-},{"events":19,"loglevel":17}],10:[function(require,module,exports){
+},{"events":20,"loglevel":18}],11:[function(require,module,exports){
 'use strict';
 
 
@@ -2873,6 +2904,7 @@ let VERSION = '0.6.1';
 const MODE_CW_GENERATOR = 'cw-generator';
 const MODE_ECHO_TRAINER = 'echo-trainer';
 const MODE_QSO_TRAINER = 'qso-trainer';
+const MODE_AUTO_PROGRESSION_TRAINER = 'auto-progression-trainer';
 const MODE_M32_CONFIG = 'm32-config';
 const MODE_FILE_UPLOAD = 'file-upload';
 
@@ -2910,6 +2942,7 @@ class M32Main {
         this.eventEmitter.addListener(EVENT_MODE_SELECTED, this.echoTrainerUI.modeSelected.bind(this.echoTrainerUI));
         this.eventEmitter.addListener(EVENT_MODE_SELECTED, this.m32CwGeneratorUI.modeSelected.bind(this.m32CwGeneratorUI));
         this.eventEmitter.addListener(EVENT_MODE_SELECTED, this.qsoTrainerUI.modeSelected.bind(this.qsoTrainerUI));
+        this.eventEmitter.addListener(EVENT_MODE_SELECTED, this.autoProgressionUI.modeSelected.bind(this.autoProgressionUI));
 
         // enable bootstrap tooltips everywhere:    
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
@@ -2967,6 +3000,8 @@ class M32Main {
             document.getElementById('qso-trainer-tab').click();
         } else if (mode === MODE_M32_CONFIG) {
             document.getElementById('m32-config-tab').click();
+        } else if (mode === MODE_AUTO_PROGRESSION_TRAINER) {
+            document.getElementById('auto-progression-trainer-tab').click();
         } else if (mode === MODE_FILE_UPLOAD) {
             document.getElementById('m32-file-upload-tab').click();
         } else {
@@ -2982,6 +3017,8 @@ class M32Main {
             this.mode = MODE_ECHO_TRAINER;
         } else if (event.target.id === 'qso-trainer-tab') {
             this.mode = MODE_QSO_TRAINER;
+        } else if (event.target.id === 'auto-progression-trainer-tab') { 
+            this.mode = MODE_AUTO_PROGRESSION_TRAINER;
         } else if (event.target.id === 'm32-config-tab') {
             this.mode = MODE_M32_CONFIG;
             this.configurationUI.readConfigs();
@@ -2993,10 +3030,10 @@ class M32Main {
     }
 }
 
-module.exports = { MODE_CW_GENERATOR, MODE_ECHO_TRAINER, MODE_QSO_TRAINER, MODE_M32_CONFIG }
+module.exports = { MODE_CW_GENERATOR, MODE_ECHO_TRAINER, MODE_QSO_TRAINER, MODE_AUTO_PROGRESSION_TRAINER, MODE_M32_CONFIG }
 
 
-},{"./m32-communication-service":2,"./m32-configuration-ui":3,"./m32-connect-ui":4,"./m32-cw-generator-ui":5,"./m32-echo-trainer-ui":6,"./m32-file-upload-ui":7,"./m32-qso-trainer":8,"./m32-storage":9,"chart.js":15,"events":19,"loglevel":17}],11:[function(require,module,exports){
+},{"./m32-auto-progression-trainer-ui":2,"./m32-communication-service":3,"./m32-configuration-ui":4,"./m32-connect-ui":5,"./m32-cw-generator-ui":6,"./m32-echo-trainer-ui":7,"./m32-file-upload-ui":8,"./m32-qso-trainer":9,"./m32-storage":10,"chart.js":16,"events":20,"loglevel":18}],12:[function(require,module,exports){
 'use strict';
 
 const log  = require ('loglevel');
@@ -3194,7 +3231,7 @@ class M32Translations {
 
 module.exports = { M32Translations }
 
-},{"loglevel":17}],12:[function(require,module,exports){
+},{"loglevel":18}],13:[function(require,module,exports){
 'use strict';
 
 let log = require("loglevel");
@@ -3352,7 +3389,7 @@ class M32CommandSpeechHandler {
 
 module.exports = { M32CommandSpeechHandler }
 
-},{"./m32protocol-i18n":11,"loglevel":17}],13:[function(require,module,exports){
+},{"./m32protocol-i18n":12,"loglevel":18}],14:[function(require,module,exports){
 'use strict';
 
 // class represents the state of the morserino
@@ -3407,7 +3444,7 @@ class M32CommandStateHandler {
 module.exports = { M32State, M32CommandStateHandler }
 
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 'use strict'
 
 let log = require("loglevel");
@@ -3508,7 +3545,7 @@ class M32CommandUIHandler {
 module.exports = { M32CommandUIHandler } 
 
 
-},{"loglevel":17}],15:[function(require,module,exports){
+},{"loglevel":18}],16:[function(require,module,exports){
 /*!
  * Chart.js v3.7.0
  * https://www.chartjs.org
@@ -16760,7 +16797,7 @@ return Chart;
 
 }));
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -18344,7 +18381,7 @@ return Chart;
 
 })));
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 /*
 * loglevel - https://github.com/pimterry/loglevel
 *
@@ -18643,7 +18680,7 @@ return Chart;
     return defaultLogger;
 }));
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -20417,7 +20454,7 @@ var RegexpGroup = (function (_super) {
 }(RegexpPart));
 exports.RegexpGroup = RegexpGroup;
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -20916,4 +20953,4 @@ function eventTargetAgnosticAddListener(emitter, name, listener, flags) {
   }
 }
 
-},{}]},{},[10]);
+},{}]},{},[11]);
