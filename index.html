@@ -21,121 +21,7 @@
 
     <link rel="manifest" href="manifest.webmanifest">
     
-    <style>
-        .hidden {
-            display: none;
-        }
-
-        .correct {
-            color: black;
-            background-color: lightgreen;
-        }
-
-        .wrong {
-            color: white;
-            background-color: red;
-        }
-        .missing {
-            color: black;
-            background-color: orange;
-        }
-        .bd-footer {
-            text-align: center;
-        }
-        .header {
-            box-shadow: 0 0.5em 1.5em rgb(0 0 0 / 10%);
-            background-color: #EEEEEE;
-        }
-        .contentContainer {
-            padding: 20px;
-        }
-        contentContainer .row {
-            padding: 12px;
-        }
-        .inputContainer {
-            margin-top: 25px;
-            background-color: #f9f8f8;
-            border: 1px solid #CCCCCC;
-            padding: 12px;
-        }
-        .inputContainer button {
-            margin: 5px;
-        }
-        .savedResultContainer {
-            margin-top: 25px;
-            background-color: #f9f8f8;
-            border: 1px solid #CCCCCC;
-            padding: 12px;
-        }
-        .savedResultContainer button {
-            padding: 5px;
-            margin-top: 5px;
-        }
-        .form-group {
-            margin-top: 12px;
-            margin-bottom: 8px;
-        }
-        .form-group textarea {
-            font-size: 120%;
-            padding: 5px;
-            text-transform: uppercase;
-            width: 100%;
-        }
-        .result {
-            font-family: monospace;
-            font-size: 140%;
-            text-transform: uppercase;
-        }
-        .legend {
-            font-size: 90%;
-            margin-top: 20px;
-            opacity: 0.7;
-        }
-        #receiveText {
-            background-color: #e2e3e5;
-        }
-        #receiveTextEchoTrainer {
-            background-color: #e2e3e5;
-        }
-        #mainTab {
-            padding-top: 20px;
-        }
-        #serialCommunicationDisabledInfo {
-            display: none;
-        }
-        #receiveTextQsoTrainer {
-            background-color: #e2e3e5;
-        }
-        .qso-request {
-            background-color: #e2e3e5;
-        }
-        .qso-answer {
-            background-color: #f9f8f8;
-            text-shadow: unset;
-        }
-        .qso-answer-button {
-            margin-left: 2px;
-        }
-        .qso-answer.unreadable {
-            filter:url(#wherearemyglasses);
-        }
-        .cw-settings {
-            border: 1px solid #CCCCCC;
-            box-shadow: 0 0.5em 1.5em rgb(0 0 0 / 10%);
-        }
-        .m32-protocol {
-            visibility: hidden;
-        }
-        .m32-protocol-enabled {
-            visibility: visible;
-        }
-        .cw-school-graz {
-            visibility: hidden;
-        }
-        .cw-school-graz-enabled {
-            visibility: visible;
-        }
-    </style>
+    <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
@@ -374,6 +260,12 @@
                         type="button" role="tab" aria-controls="qso-trainer-tab-content" 
                         aria-selected="false">QSO Trainer (beta!)</button>
             </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="auto-trainer-tab" 
+                        data-bs-toggle="tab" data-bs-target="#auto-trainer-tab-content" 
+                        type="button" role="tab" aria-controls="auto-trainer-tab-content" 
+                        aria-selected="false">Auto-Progression Trainer (beta!)</button>
+            </li>
             <li class="nav-item m32-protocol" role="presentation">
                 <button class="nav-link" id="m32-config-tab" data-bs-toggle="tab" 
                         data-bs-target="#m32-config-tab-content" type="button" 
@@ -488,7 +380,7 @@
                 </div>
                 <div class="form-group">
                     Received from Morserino:
-                    <textarea readonly onfocus="this.blur()" rows="6" cols="80" id="receiveTextEchoTrainer" spellcheck="false" placeholder="Here the characters received from Morserino are shown."></textarea>
+                    <textarea readonly onfocus="this.blur()" rows="6" cols="80" id="receiveText" spellcheck="false" placeholder="Here the characters received from Morserino are shown."></textarea>
                 </div>
                 <div>
                     <button id="clearEchoTrainerButton" class="btn btn-outline-primary" title="Clear text received from Morserino (for Echo Trainer mode) and abbreviation list." data-bs-toggle="tooltip">Clear</button>
@@ -609,7 +501,7 @@
                 </div>
                 Received from Morserino:
                 <div class="col-sm form-group">
-                    <textarea rows="2" cols="80" id="receiveTextQsoTrainer" spellcheck="false" placeholder="Here the characters received from Morserino are shown."></textarea>
+                    <textarea rows="2" cols="80" id="receiveText" spellcheck="false" placeholder="Here the characters received from Morserino are shown."></textarea>
                 </div>
                 <div class="form-group">
                     Your Input:
@@ -633,6 +525,14 @@
                     <button id="clearQsoTrainerButton" class="btn btn-outline-primary" title="Restart QSO, clear QSO data." data-bs-toggle="tooltip">Restart QSO (Clear All)</button>
                 </div>
             </div> <!-- end QSO trainer -->
+
+            <!-- start auto progression trainer -->
+            <div class="tab-pane fade show active" id="auto-trainer-tab-content" role="tabpanel" aria-labelledby="auto-trainer-tab">
+                Received from morserino:
+                <div class="col-sm form-group">
+                    <textarea rows="2" cols="80" id="receiveText" spellcheck="false" placeholder="Here the characters received from Morserino are shown."></textarea>
+                </div>
+            </div> <!-- end auto progression trainer -->
 
             <!-- start m32 config -->
             <div class="tab-pane fade" id="m32-config-tab-content" role="tabpanel" aria-labelledby="m32-config-tab">
@@ -906,7 +806,6 @@ OE6YAW de OE6CHD kn
                 </div>
 
             </div> <!-- end m32 file upload -->
-            
         </div> <!-- end tab-content -->
     </div>
 

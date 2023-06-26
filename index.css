@@ -1,0 +1,140 @@
+.hidden {
+    display: none;
+}
+
+.correct {
+    color: black;
+    background-color: lightgreen;
+}
+
+.wrong {
+    color: white;
+    background-color: red;
+}
+
+.missing {
+    color: black;
+    background-color: orange;
+}
+
+.bd-footer {
+    text-align: center;
+}
+
+.header {
+    box-shadow: 0 0.5em 1.5em rgb(0 0 0 / 10%);
+    background-color: #EEEEEE;
+}
+
+.contentContainer {
+    padding: 20px;
+}
+
+contentContainer .row {
+    padding: 12px;
+}
+
+.inputContainer {
+    margin-top: 25px;
+    background-color: #f9f8f8;
+    border: 1px solid #CCCCCC;
+    padding: 12px;
+}
+
+.inputContainer button {
+    margin: 5px;
+}
+
+.savedResultContainer {
+    margin-top: 25px;
+    background-color: #f9f8f8;
+    border: 1px solid #CCCCCC;
+    padding: 12px;
+}
+
+.savedResultContainer button {
+    padding: 5px;
+    margin-top: 5px;
+}
+
+.form-group {
+    margin-top: 12px;
+    margin-bottom: 8px;
+}
+
+.form-group textarea {
+    font-size: 120%;
+    padding: 5px;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+.result {
+    font-family: monospace;
+    font-size: 140%;
+    text-transform: uppercase;
+}
+
+.legend {
+    font-size: 90%;
+    margin-top: 20px;
+    opacity: 0.7;
+}
+
+#receiveText {
+    background-color: #e2e3e5;
+}
+
+#receiveTextEchoTrainer {
+    background-color: #e2e3e5;
+}
+
+#mainTab {
+    padding-top: 20px;
+}
+
+#serialCommunicationDisabledInfo {
+    display: none;
+}
+
+#receiveTextQsoTrainer {
+    background-color: #e2e3e5;
+}
+
+.qso-request {
+    background-color: #e2e3e5;
+}
+
+.qso-answer {
+    background-color: #f9f8f8;
+    text-shadow: unset;
+}
+
+.qso-answer-button {
+    margin-left: 2px;
+}
+
+.qso-answer.unreadable {
+    filter:url(#wherearemyglasses);
+}
+
+.cw-settings {
+    border: 1px solid #CCCCCC;
+    box-shadow: 0 0.5em 1.5em rgb(0 0 0 / 10%);
+}
+
+.m32-protocol {
+    visibility: hidden;
+}
+
+.m32-protocol-enabled {
+    visibility: visible;
+}
+
+.cw-school-graz {
+    visibility: hidden;
+}
+
+.cw-school-graz-enabled {
+    visibility: visible;
+}
